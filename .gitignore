@@ -28,7 +28,8 @@ Thumbs.db
 
 # VSCode
 .vscode/
-!.vscode/extensions.json
+!.vscode/extensions.json\
+
 
 # Lambda zip packages
 *.zip
