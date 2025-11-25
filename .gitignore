@@ -1,0 +1,42 @@
+# Node dependencies
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Build output
+dist/
+build/
+out/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# Logs
+*.log
+logs/
+debug.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+!.vscode/extensions.json
+
+# Lambda zip packages
+*.zip
+
+# AWS SAM / CDK / Serverless folders (if you add later)
+.aws-sam/
+.cdk.out/
+.serverless/
+
+# GitHub Actions temp files
+*.temp
