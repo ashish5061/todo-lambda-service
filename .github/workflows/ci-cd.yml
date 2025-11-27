@@ -18,11 +18,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies
-        run: npm install --production
+      - name: Install all dependencies (for build)
+        run: npm install
 
       - name: Build TypeScript -> JavaScript
         run: npm run build
+
+      - name: Install production dependencies only
+        run: |
+          rm -rf node_modules
+          npm install --production
 
       - name: Zip compiled Lambda with dependencies
         run: |
