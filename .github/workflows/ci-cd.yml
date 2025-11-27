@@ -19,15 +19,16 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --production
 
       - name: Build TypeScript -> JavaScript
         run: npm run build
 
-      - name: Zip compiled Lambda
+      - name: Zip compiled Lambda with dependencies
         run: |
           cd dist
-          zip -r ../lambda.zip .
+          cp -r ../node_modules .
+          zip -r ../lambda.zip . -x "*.git*"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
