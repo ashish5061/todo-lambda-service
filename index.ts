@@ -20,16 +20,13 @@ export const handler = async (event: AddTaskEvent) => {
       taskId: { S: taskId },
       title: { S: title },
       completed: { BOOL: completed },
-    }, 
+    },
   };
 
   await client.send(new PutItemCommand(params));
 
   return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "Task added successfully",
-      taskId,
-    }),
+    title,
+    completed,
   };
 };
