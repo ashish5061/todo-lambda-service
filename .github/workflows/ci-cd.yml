@@ -32,7 +32,7 @@ jobs:
       - name: Zip compiled Lambda with dependencies
         run: |
           cd dist
-          cp -r ../node_modules .
+          cp -r ../node_modules .      # include node_modules
           zip -r ../lambda.zip . -x "*.git*"
 
       - name: Configure AWS credentials
@@ -42,8 +42,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy to AWS Lambda
+      # ------------------------------
+      # DEPLOY BOTH LAMBDAS
+      # ------------------------------
+
+      - name: Deploy GetTask Lambda
         run: |
           aws lambda update-function-code \
-            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+            --function-name ${{ secrets.GET_TASK_FUNCTION_NAME }} \
+            --zip-file fileb://lambda.zip
+
+      - name: Deploy AddTask Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ secrets.ADD_TASK_FUNCTION_NAME }} \
             --zip-file fileb://lambda.zip
