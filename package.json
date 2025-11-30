@@ -2,6 +2,7 @@
   "name": "my-lambda",
   "version": "1.0.0",
   "description": "AWS Lambda TypeScript project",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },
