@@ -29,10 +29,6 @@ jobs:
           rm -rf node_modules
           npm install --production
 
-
-
-          
-
       # -----------------------------
       # ZIP FILE FOR AddTask (index.js)
       # -----------------------------
@@ -40,7 +36,7 @@ jobs:
         run: |
           mkdir addtask
           cp dist/index.js addtask/
-          cp -r node_modules addtask/
+          cp node_modules addtask/
           cd addtask
           zip -r ../addtask.zip . -x "*.git*"
 
