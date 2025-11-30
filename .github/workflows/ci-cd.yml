@@ -36,9 +36,10 @@ jobs:
         run: |
           mkdir addtask
           cp dist/index.js addtask/
-          cp node_modules addtask/
+          cp -r node_modules addtask/
           cd addtask
           zip -r ../addtask.zip . -x "*.git*"
+          cd ..
 
       # -----------------------------
       # ZIP FILE FOR GetTask (listTasks.js)
