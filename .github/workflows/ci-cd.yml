@@ -29,12 +29,31 @@ jobs:
           rm -rf node_modules
           npm install --production
 
-      - name: Zip compiled Lambda with dependencies
+      # -----------------------------
+      # ZIP FILE FOR AddTask (index.js)
+      # -----------------------------
+      - name: Zip AddTask Lambda
         run: |
-          cd dist
-          cp -r ../node_modules .      # include node_modules
-          zip -r ../lambda.zip . -x "*.git*"
+          mkdir addtask
+          cp dist/index.js addtask/
+          cp -r node_modules addtask/
+          cd addtask
+          zip -r ../addtask.zip . -x "*.git*"
 
+      # -----------------------------
+      # ZIP FILE FOR GetTask (listTasks.js)
+      # -----------------------------
+      - name: Zip GetTask Lambda
+        run: |
+          mkdir gettask
+          cp dist/listTasks.js gettask/
+          cp -r node_modules gettask/
+          cd gettask
+          zip -r ../gettask.zip . -x "*.git*"
+
+      # -----------------------------
+      # DEPLOY
+      # -----------------------------
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -42,18 +61,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      # ------------------------------
-      # DEPLOY BOTH LAMBDAS
-      # ------------------------------
+      - name: Deploy AddTask Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ secrets.ADD_TASK_FUNCTION_NAME }} \
+            --zip-file fileb://addtask.zip
 
       - name: Deploy GetTask Lambda
         run: |
           aws lambda update-function-code \
             --function-name ${{ secrets.GET_TASK_FUNCTION_NAME }} \
-            --zip-file fileb://lambda.zip
-
-      - name: Deploy AddTask Lambda
-        run: |
-          aws lambda update-function-code \
-            --function-name ${{ secrets.ADD_TASK_FUNCTION_NAME }} \
-            --zip-file fileb://lambda.zip
+            --zip-file fileb://gettask.zip
