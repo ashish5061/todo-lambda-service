@@ -47,6 +47,7 @@ jobs:
       - name: Zip GetTask Lambda
         run: |
           mkdir gettask
+          # Rename listTasks.js -> index.js inside the folder
           cp dist/listTasks.js gettask/
           cp -r node_modules gettask/
           cd gettask
