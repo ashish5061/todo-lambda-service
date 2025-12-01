@@ -49,6 +49,7 @@ jobs:
           mkdir gettask
           # Rename listTasks.js -> index.js inside the folder
           cp dist/listTasks.js gettask/
+          mv gettask/listTasks.js gettask/index.js
           cp -r node_modules gettask/
           cd gettask
           zip -r ../gettask.zip . -x "*.git*"
